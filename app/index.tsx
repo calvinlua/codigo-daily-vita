@@ -5,6 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Image } from "expo-image";
+import Button from "@/components/Button";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,7 @@ const styles = StyleSheet.create({
     display: "flex",
     backgroundColor: "#d9f2e7",
     flex: 1,
+    gap: 10,
   },
   header: {
     paddingTop: hp("5%"),
@@ -26,17 +28,10 @@ const styles = StyleSheet.create({
   footer: { flex: 1, justifyContent: "center", alignItems: "center" },
   title: {
     fontSize: hp("3%"),
-    fontWeight: "500",
+    fontWeight: "bold",
   },
-  text: { fontSize: hp("2%"), fontWeight: "300" },
+  text: { fontSize: hp("2%"), fontWeight: "bold" },
   subtitle: { fontSize: hp("2%"), fontWeight: "200" },
-  button: {
-    width: wp("70%"),
-    height: hp("5%"),
-    backgroundColor: "#ef6c57",
-    borderRadius: 3,
-    color: "white",
-  },
 });
 
 export default function Index() {
@@ -61,11 +56,13 @@ export default function Index() {
         </Text>
       </View>
       <View style={styles.footer}>
-        <Pressable onPress={() => {}} style={styles.button}>
-          {({ pressed }) => (
-            <Text style={styles.text}>{pressed ? "Pressed!" : "Press Me"}</Text>
-          )}
-        </Pressable>
+        <Button
+          label={"Press Me"}
+          width={wp(90)}
+          height={hp(5)}
+          backgroundColor={"#ef6c57"}
+          onPress={() => {}}
+        ></Button>
       </View>
     </View>
   );
