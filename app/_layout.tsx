@@ -10,7 +10,10 @@ export default function RootLayout() {
   return (
     <>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right"]}>
+        <SafeAreaView
+          style={{ flex: 1 }}
+          edges={["top", "left", "right", "bottom"]}
+        >
           <StatusBar style="dark" />
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
