@@ -13,7 +13,8 @@ type Props = {
   onPress?: () => void;
   width: DimensionValue | undefined;
   height: DimensionValue | undefined;
-  backgroundColor: ColorValue | undefined;
+  backgroundColor?: ColorValue | undefined;
+  color: ColorValue | undefined;
 };
 
 const styles = StyleSheet.create({
@@ -47,12 +48,13 @@ export default function Button({
   width,
   height,
   backgroundColor,
+  color = "#fff",
 }: Props) {
   //dark theme
   return (
     <View style={[styles.buttonContainer, { width, height, backgroundColor }]}>
       <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonLabel}>{label}</Text>
+        <Text style={[styles.buttonLabel, { color }]}>{label}</Text>
       </Pressable>
     </View>
   );

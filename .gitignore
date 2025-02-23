@@ -35,4 +35,18 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+#ios native build files
+/ios
+
+# Android native build files
+/android
+android/
+*.iml
+.gradle/
+local.properties
+.idea/
+build/
+captures/
+output.json
+
 app-example
