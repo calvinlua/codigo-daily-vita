@@ -1,4 +1,10 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -6,26 +12,61 @@ import {
 import React from "react";
 import Button from "@/components/Button";
 import { router, useRouter } from "expo-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import { updateForm } from "./store/healthSlice";
 
-const options = [
-  "Sleep",
-  "Immunity",
-  "Stress",
-  "Joint Support",
-  "Digestion",
-  "Mood",
-  "Energy",
-  "Hair, Skin, Nails",
-  "Weight Loss",
-  "Fitness",
-  "Special Medical Condition",
+const healthConcerns = [
+  { id: 1, name: "Sleep" },
+  { id: 2, name: "Immunity" },
+  { id: 3, name: "Stress" },
+  { id: 4, name: "Joint Support" },
+  { id: 5, name: "Digestion" },
+  { id: 6, name: "Mood" },
+  { id: 7, name: "Energy" },
+  { id: 8, name: "Hair, Nail, Skin" },
+  { id: 9, name: "Weight Loss" },
+  { id: 10, name: "Fitness" },
 ];
 
 const page1 = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const { healthFocus } = useSelector((state: any) => state.healthConcern);
+
+  const toggleSelection = (item: { id: number; name: string }) => {
+    const isSelected = healthFocus.some(
+      (focus: { id: number }) => focus.id === item.id
+    );
+    if (isSelected) {
+      dispatch(
+        updateForm({
+          healthFocus: healthFocus.filter((focus: any) => focus.id !== item.id),
+        })
+      );
+    } else if (healthFocus.length < 5) {
+      dispatch(updateForm({ healthFocus: [...healthFocus, item] }));
+    }
+  };
+
+  const renderChip = ({ item }: { item: { id: number; name: string } }) => {
+    const isSelected = healthFocus.some(
+      (focus: { id: number }) => focus.id === item.id
+    );
+    return (
+      <TouchableOpacity
+        onPress={() => toggleSelection(item)}
+        style={{
+          paddingVertical: 8,
+          paddingHorizontal: 12,
+          margin: 6,
+          borderRadius: 20,
+          backgroundColor: isSelected ? "#2C3E50" : "#ECF0F1",
+        }}
+      ></TouchableOpacity>
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.selectionContent}>
@@ -35,9 +76,9 @@ const page1 = () => {
           <Text style={styles.title}>(up to 5)</Text>
         </Text>
         <FlatList
-          data={options}
+          data={healthConcerns}
           renderItem={renderChip}
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => item.id.toString()}
           numColumns={3}
           contentContainerStyle={{ marginBottom: 20 }}
         />
